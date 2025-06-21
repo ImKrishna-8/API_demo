@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry potter All Books</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1c1c1c;
+            color: #f0e6d2;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d4af37;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        table {
+            margin: auto;
+            width: 90%;
+            border-collapse: collapse;
+            background-color: #2e2e2e;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3b3b3b;
+            color: #ffcc00;
+            font-size: 1.2em;
+        }
+
+        td {
+            color: #eaeaea;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        tr:hover {
+            background-color: #3d3d3d;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Harry Potter Books</h1>
+    <table border="1" id="books">
+        <th>title</th>
+        <th>Author</th>
+        <th>Summary</th>
+    </table>
+</body>
+<script>
+    const booksTable = document.querySelector('#books');
+
+
+    function loadBooks() {
+
+        fetch('https://api.potterdb.com/v1/books').then(res => res.json()).then(books => {
+
+            let len = books.data.length;
+
+            for (let i = 0; i < len; i++) {
+                let newRow = booksTable.insertRow();
+
+                let cell1 = newRow.insertCell(0);
+                let cell2 = newRow.insertCell(1);
+                let cell3 = newRow.insertCell(2);
+
+                cell1.textContent = books.data[i].attributes.title;
+                cell2.textContent = books.data[i].attributes.author;
+                cell3.textContent = books.data[i].attributes.summary;
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    loadBooks();
+
+</script>
+
+</html>
